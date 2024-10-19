@@ -76,6 +76,7 @@ const styles = `
       border: none;
       padding: 10px;
       border-radius: 5px;
+      font-size: 20px;
       cursor: pointer;
       transition: background 0.3s;
     }
@@ -84,8 +85,13 @@ const styles = `
     }
     a {
       margin-top: 20px;
-      text-decoration: underline;
+      text-decoration: none;
       padding: 10px 20px;
+      margin-top: 20px;
+      color: lightseagreen;
+    
+      border-radius: 5px;
+margin: auto;
     }
       .uploaded {
         background: dodgerblue;
@@ -118,7 +124,7 @@ const styles = `
     #toggle {
       position: absolute;
       top: 20px;
-      right: 20px;
+      right: 10%;
       cursor: pointer;
       padding: 10px 15px;
       background-color: #35424a;
@@ -131,21 +137,30 @@ const styles = `
         background: dodgerblue;
             color: white;
       }
+    .container {
+      width: 50%;
+      margin: auto;
+      text-align: center}
        
     #toggle:hover {
       background-color: #1a202c;
     }
+
       @media (max-width: 768px) {
       body {
         padding: 20px;
         width: 100%;
         height: 99vh;
+        font-size: 20px;
+        text-align: center;
       }
-             .container {
+      .container {
           width: 80%;
           height: 100%;
           fons-size: 30px;
-          background: lightskyblue;
+          margin-top: 50px ;
+      input[type="file"] {
+      font-size: 20px;
         }
         
   </style>
@@ -175,32 +190,51 @@ app.post("/upload", upload.single("file"), (req, res) => {
     return res.status(400).send("No file uploaded.");
   }
   res.send(
-    `<div class="container">
-    ${styles}
-    ${script}
-    <h2>File uploaded successfully!</h2>
-    <p><a href="/uploads/${req.file.filename}">${req.file.originalname}</a></p>
-    <button id="toggle">Toggle Dark Mode</button>
-    <a href="/">Upload more files</a>
-  </div>
-    `
+    `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>File Upload</title>
+      ${styles}
+    </head>
+    <body>
+      <div class="container">
+        <h2>File uploaded successfully!</h2>
+        <p><a href="/uploads/${req.file.filename}">${req.file.originalname}</a></p>
+        <button id="toggle">Dark Mode</button>
+        <a href="/">Upload more files</a>
+      </div>
+      ${script}
+    </body>
+    </html>`
   );
 });
 
 // Home route
 app.get("/", (_, res) => {
   res.send(`
-    <div class="container">
-    ${styles}
-    ${script}
-    <h2>File Upload</h2>
-    <form action="/upload" method="post" enctype="multipart/form-data">
-      <input type="file" name="file" required>
-      <button type="submit">Upload</button>
-    </form>
-    <button id="toggle">Toggle Dark Mode</button>
-    <a href="/files">View Uploaded Files</a>
-  </div>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>File Upload</title>
+      ${styles}
+    </head>
+    <body>
+      <div class="container">
+        <h2>File Upload</h2>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+          <input type="file" name="file" required>
+          <button type="submit">Upload</button>
+        </form>
+        <button id="toggle">Dark Mode</button>
+        <a href="/files">View Uploaded Files</a>
+      </div>
+      ${script}
+    </body>
+    </html>
   `);
 });
 
@@ -229,14 +263,24 @@ app.get("/files", (_, res) => {
       )
       .join("");
     res.send(`
-      <div class="container">
-      ${styles}
-      ${script}
-      <h2>Uploaded Files</h2>
-      <ul>${fileLinks}</ul>
-      <button id="toggle">Toggle Dark Mode</button>
-      <a class="uploaded" href="/">Upload more files</a>
-    </div>
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Uploaded Files</title>
+        ${styles}
+      </head>
+      <body>
+        <div class="container">
+          <h2>Uploaded Files</h2>
+          <ul>${fileLinks}</ul>
+          <button id="toggle">Dark Mode</button>
+          <a class="uploaded" href="/">Upload more files</a>
+        </div>
+        ${script}
+      </body>
+      </html>
     `);
   });
 });
