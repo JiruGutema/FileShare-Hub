@@ -4,12 +4,16 @@ import { extname } from "path";
 import { readdir, unlink } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { exec } from "child_process";
+import { stderr, stdout } from "process";
+import os from "os";
+const platform = os.platform();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
-const PORT = 3005;
+const PORT = 1234;
 
 // Set up storage with multer
 const storage = diskStorage({
@@ -45,6 +49,7 @@ const styles = `
     body.dark {
       background-color: #222;
       color: #f4f4f4;
+      overflow-x: hidden;
     }
     h2 {
       color: #35424a;
@@ -145,7 +150,12 @@ margin: auto;
     #toggle:hover {
       background-color: #1a202c;
     }
-
+    .uploadMore {
+    background: dodgerblue;
+    color: white;
+    textdecoration: none;
+    
+    }
       @media (max-width: 768px) {
       body {
         padding: 20px;
@@ -155,10 +165,13 @@ margin: auto;
         text-align: center;
       }
       .container {
-          width: 80%;
+          width: 99.99%;
+          overflow-x: hidden;
           height: 100%;
           fons-size: 30px;
           margin-top: 50px ;
+       
+
       input[type="file"] {
       font-size: 20px;
         }
@@ -203,7 +216,7 @@ app.post("/upload", upload.single("file"), (req, res) => {
         <h2>File uploaded successfully!</h2>
         <p><a href="/uploads/${req.file.filename}">${req.file.originalname}</a></p>
         <button id="toggle">Dark Mode</button>
-        <a href="/">Upload more files</a>
+        <a href="/" class="uploadMore" >Upload more files</a>
       </div>
       ${script}
     </body>
@@ -230,7 +243,7 @@ app.get("/", (_, res) => {
           <button type="submit">Upload</button>
         </form>
         <button id="toggle">Dark Mode</button>
-        <a href="/files">View Uploaded Files</a>
+        <a href="/files" class="uploadMore">View Uploaded Files</a>
       </div>
       ${script}
     </body>
@@ -276,7 +289,7 @@ app.get("/files", (_, res) => {
           <h2>Uploaded Files</h2>
           <ul>${fileLinks}</ul>
           <button id="toggle">Dark Mode</button>
-          <a class="uploaded" href="/">Upload more files</a>
+          <a class="uploadMore" href="/">Upload more files</a>
         </div>
         ${script}
       </body>
@@ -297,5 +310,52 @@ app.post("/delete", express.urlencoded({ extended: true }), (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  setTimeout(() => {
+    console.log(
+      "**********************************************************************************"
+    );
+  }, 0);
+
+  if (platform === "linux") {
+    // Check if it's Android
+    const isAndroid = os.release().includes("android");
+    if (isAndroid) {
+      exec("ifconfig", (error, stdout) => {
+        if (error) {
+          console.error(`Error executing echo: ${error.message}`);
+          return;
+        }
+        console.log(`Command1 Output: ${stdout}`);
+      });
+    } else {
+      exec("ifconfig", (error, stdout) => {
+        if (error) {
+          console.error(`Error executing command2: ${error.message}`);
+          return;
+        }
+        console.log(`Command2 Output: ${stdout}`);
+      });
+    }
+  } else if (platform === "win32") {
+    exec("ipconfig", (error, stdout) => {
+      if (error) {
+        console.error(`Error executing command2: ${error.message}`);
+        return;
+      }
+      console.log(`Command2 Output: ${stdout}`);
+    });
+  } else {
+    console.log(
+      `If your machine's OS is not in [Linux, Android, MacOS, Windows], please try to get your machines ip adress manually. then use that ip address to connect to your server for file sharing. http://your-machine's-ip:${PORT}`
+    );
+  }
+  setTimeout(() => {
+    console.log(
+      "**********************************************************************************"
+    );
+    console.log(`Server is running on http://localhost:${PORT} \n`);
+    console.log(
+      `for sharing file locally, \nplease follow the following step, \n \n1. make sure you are connected to same network with both of your device. \n\n2. after connecting to same network, take a ip address of your machine. please, consider looking it in the above log, it starts with 'inet' if you are on linux. or go to settings and look up for network section. \n\n3. run a apps on your machine. (it doesn't matter which one). \n\n4. go to your browser on your other device, and enter the following to you machine. http://your-machine's-ip(the one the app is running on):{PORT} `
+    );
+  }, 0);
 });
