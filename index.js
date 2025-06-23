@@ -132,11 +132,11 @@ app.get("/files", (_, res) => {
                 <div class="file-info">
                   <div class="file-icon">📁</div>
                   <div class="file-details">
-                    <h4>${file.name}</h4>
+                    <h4 style="word-break: break-all; overflow-wrap: break-word; max-width: 300px;">${file.name}</h4>
                     <p class="file-size">${formatFileSize(file.size)} • ${new Date(file.date).toLocaleDateString()}</p>
                   </div>
                 </div>
-                <div class="file-actions">
+                <div class="file-actions" style="flex-shrink: 0;">
                   <a href="/uploads/${file.name}" class="btn btn-secondary" target="_blank">👁️ View</a>
                   <a href="/uploads/${file.name}" download class="btn btn-success">⬇️ Download</a>
                   <form action="/delete" method="post" style="display:inline;">
