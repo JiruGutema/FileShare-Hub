@@ -1,156 +1,236 @@
-# Sharing File Without Cable (PC to Mobile)
+# 🚀 FileShare Hub
 
-This project provides a simple way to share files between your PC and mobile device using a web interface. It uses Node.js with Express to handle file uploads and serve static files.
+**A modern, feature-rich file sharing application for seamless file transfer between devices on the same network.**
 
-## Features
+![FileShare Hub](https://img.shields.io/badge/Node.js-Express-green) ![License](https://img.shields.io/badge/License-MIT-blue) ![Version](https://img.shields.io/badge/Version-2.0-orange)
 
-- Upload files from your PC or mobile device.
-- List and download uploaded files.
-- Simple web interface for uploading and listing files.
+## ✨ Features
 
-## Prerequisites
+### 🎨 **Modern UI/UX**
+- **Glass morphism design** with gradient backgrounds
+- **Dark/Light mode** with persistent theme preference
+- **Responsive design** optimized for mobile and desktop
+- **Smooth animations** and hover effects
+- **Professional typography** and consistent styling
 
-- Node.js installed on your machine.
+### 📤 **Advanced File Upload**
+- **Drag & drop interface** for intuitive file uploads
+- **Multiple file selection** (up to 10 files simultaneously)
+- **Real-time progress indicators** during upload
+- **File type detection** with appropriate icons
+- **Automatic file organization** with timestamps
 
-## Installation
+### 📱 **Mobile-First Experience**
+- **QR code generation** for instant mobile access
+- **Network IP auto-detection** across platforms
+- **Touch-friendly interface** with optimized button sizes
+- **Native mobile sharing** integration
+- **Responsive file management** cards
 
-1. Clone the repository:
+### 🗂️ **Smart File Management**
+- **File statistics dashboard** (total files, size, types)
+- **Sortable file list** by date, name, or size
+- **Quick action buttons** (View, Download, Delete)
+- **Bulk operations** with select all/clear functionality
+- **File preview** support for common formats
 
-   ```sh
-   git clone https://github.com/JiruGUtema/Sharing-File-Without-Cable-PC-Mobile.git
-   ```
+### ⚡ **Quick Access Features**
+- **Quick options header** with common actions
+- **One-click refresh** and navigation
+- **Instant URL copying** to clipboard
+- **Smart notifications** for user feedback
 
-2. Navigate to the project directory:
+## 🛠️ **Technology Stack**
 
-   ```sh
-   cd Sharing-File-Without-Cable-PC-Mobile/Backend
-   ```
+- **Backend**: Node.js + Express.js
+- **File Handling**: Multer middleware
+- **QR Generation**: qrcode + qrcode-terminal
+- **Frontend**: Vanilla JavaScript + Modern CSS
+- **Styling**: CSS Grid, Flexbox, CSS Variables
+- **Icons**: Unicode Emojis for universal compatibility
 
-3. Install the dependencies:
+## 📋 **Prerequisites**
 
-   ```sh
-   npm install
-   ```
+- **Node.js** (v14.0.0 or higher)
+- **npm** (v6.0.0 or higher)
+- **Modern web browser** (Chrome, Firefox, Safari, Edge)
 
-## Usage
+## 🚀 **Quick Start**
 
-1. Start the server:
+### 1. **Installation**
 
-   ```sh
-   node index.js
-   ```
+```bash
+# Clone the repository
+git clone https://github.com/JiruGUtema/Sharing-File-Without-Cable-PC-Mobile.git
 
-2. Open your web browser and navigate to `http://localhost:3000`.
+# Navigate to project directory
+cd Sharing-File-Without-Cable-PC-Mobile
 
-3. Use the web interface to upload files and view the list of uploaded files.
+# Install dependencies
+npm install
+```
 
-## Project Structure
+### 2. **Start the Server**
 
-- `index.js`: Main server file.
-- `uploads/`: Directory where uploaded files are stored.
+```bash
+# Start the application
+node index.js
 
-## Endpoints
+# Or use nodemon for development
+npm run dev
+```
 
-- `GET /`: Home route with file upload form.
-- `POST /upload`: Endpoint to handle file uploads.
-- `GET /uploads/:filename`: Endpoint to serve uploaded files.
-- `GET /files`: Endpoint to list all uploaded files.
+### 3. **Access the Application**
 
-## License
+- **Local Access**: `http://localhost:1234`
+- **Network Access**: `http://YOUR_IP:1234`
 
-Here's how you can add the "How to Use on Local Network" section to your README:
+The server will display a beautiful ASCII art banner with:
+- 📱 QR code for mobile access
+- 🌐 Network URLs for easy sharing
+- 💡 Helpful tips and instructions
 
-````markdown
-# File Upload Server
+## 📱 **Mobile Access Setup**
 
-This is a simple file upload server built using Node.js, Express, and Multer. It allows users to upload files, displays a list of uploaded files, and provides options to download and delete files. The application also supports dark mode.
+### **Automatic Network Detection**
+The application automatically detects your network IP and generates:
+- QR codes in terminal for quick scanning
+- Web-based QR codes that update dynamically
+- Copy-to-clipboard functionality for easy sharing
 
-## Features
+### **Manual Network Setup**
 
-1. File upload: Users can upload files with a maximum size of 10MB. The uploaded files are saved in the 'uploads' folder.
-2. File list: A list of uploaded files is displayed on the '/files' route.
-3. Dark mode: The application supports dark mode, which can be toggled using the 'Toggle Dark Mode' button.
-4. File deletion: Users can delete uploaded files using the 'Delete' button.
-
-## Setup
-
-1. Make sure you have Node.js installed.
-2. Create a new directory for your project and navigate to it in the terminal.
-3. Run `npm init -y` to create a package.json file.
-4. Install the required dependencies by running:
-
+1. **Find Your IP Address:**
    ```bash
-   npm install express multer
-   ```
-````
-
-5. Create an 'uploads' folder in the project directory to store uploaded files.
-
-## Usage
-
-1. Save the provided code in a file called 'app.js' in the project directory.
-2. Start the server by running `node app.js` in the terminal.
-3. Visit <http://localhost:3005> in your browser to access the application.
-
-## How to Use on Local Network
-
-1. **Obtain Your Local IP Address:**
-
-   - **Windows:**
-     - Open Command Prompt and run:
-       ```bash
-       ipconfig
-       ```
-     - Look for the `IPv4 Address` under your active network connection.
-   - **macOS or Linux:**
-     - Open Terminal and run:
-       ```bash
-       ifconfig
-       ```
-     - Look for the `inet` address under your active network interface (e.g., `en0` for Wi-Fi).
-
-2. **Update Your Application to Listen on All Interfaces:**
-   Modify your `app.js` file to listen on `0.0.0.0` instead of `localhost`:
-
-   ```javascript
-   const PORT = 3005;
-   const HOST = "0.0.0.0"; // Change to listen on all available interfaces
-
-   app.listen(PORT, HOST, () => {
-     console.log(`Server is running on http://${HOST}:${PORT}`);
-   });
+   # Windows
+   ipconfig
+   
+   # macOS/Linux
+   ifconfig
+   
+   # Or check the server startup message
    ```
 
-3. **Run Your Application:**
-   Start your application using Nodemon or Node:
+2. **Connect Devices:**
+   - Ensure all devices are on the same Wi-Fi network
+   - Scan the QR code or visit the network URL
+   - Start sharing files instantly!
 
-   ```bash
-   nodemon app.js
-   ```
+## 🏗️ **Project Structure**
 
-4. **Connect Your Devices to the Same Network:**
-   Ensure that your computer and the device you want to use to access the application (e.g., a smartphone or tablet) are connected to the same Wi-Fi network.
+```
+FileShare-Hub/
+├── index.js              # Main server file
+├── uploads/              # File storage directory
+├── utils/                # Utility modules
+│   ├── styles.js         # CSS styles
+│   ├── script.js         # Client-side JavaScript
+│   ├── homePage.js       # Homepage template
+│   ├── getFiles.js       # File listing logic
+│   └── uploadFiles.js    # Upload success page
+├── package.json          # Dependencies and scripts
+└── README.md            # Project documentation
+```
 
-5. **Access the Application from Another Device:**
+## 🔌 **API Endpoints**
 
-   - Open a web browser on your mobile device or another computer.
-   - Enter the following URL, replacing `YOUR_LOCAL_IP` with the actual local IP address you found earlier:
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/` | Homepage with upload interface |
+| `POST` | `/upload` | Handle file uploads (max 10 files) |
+| `GET` | `/files` | File manager with statistics |
+| `GET` | `/qr` | Generate QR code for network access |
+| `GET` | `/uploads/:filename` | Serve uploaded files |
+| `POST` | `/delete` | Delete specific files |
 
-   ```
-   http://YOUR_LOCAL_IP:3005
-   ```
+## ⚙️ **Configuration**
 
-   For example, if your local IP address is `192.168.1.10`, you would enter:
+### **Environment Variables**
+```bash
+# Optional: Create .env file
+PORT=1234                 # Server port (default: 1234)
+UPLOAD_LIMIT=10          # Max files per upload
+MAX_FILE_SIZE=50MB       # Maximum file size
+```
 
-   ```
-   http://192.168.1.10:3005
-   ```
+### **Customization Options**
+- **Port Configuration**: Change `PORT` constant in `index.js`
+- **Upload Limits**: Modify multer configuration
+- **Styling**: Update CSS variables in `utils/styles.js`
+- **File Storage**: Customize upload directory path
 
-6. **Use the Application:**
-   You should now see the file upload interface. You can upload files, view uploaded files, and delete them just as you would on your local machine.
+## 🔒 **Security Features**
 
-### Additional Notes
+- **File type validation** and sanitization
+- **Upload size limits** to prevent abuse
+- **Timestamp-based naming** to avoid conflicts
+- **Local network restriction** (no external access)
+- **Input validation** and error handling
 
-- **Firewall Settings:** Ensure that any firewall on your computer allows incoming connections on the port you're using (e.g., port 3005).
-- **Testing:** You can test the connection by opening the URL in multiple devices connected to the same network.
-- **Dynamic IP:** If your local IP address changes (common with DHCP), repeat the steps to obtain the new IP address.
+## 📊 **Performance**
+
+- **Lightweight**: ~2MB total package size
+- **Fast uploads**: Optimized multer configuration
+- **Efficient rendering**: Minimal DOM manipulation
+- **Memory friendly**: Streaming file operations
+- **Mobile optimized**: Touch-friendly interactions
+
+## 🐛 **Troubleshooting**
+
+### **Common Issues**
+
+**Port Already in Use:**
+```bash
+# Kill process using port 1234
+lsof -ti:1234 | xargs kill -9
+
+# Or change port in index.js
+const PORT = 3000; // Use different port
+```
+
+**Network Access Issues:**
+- Check firewall settings
+- Ensure devices are on same network
+- Verify IP address is correct
+- Try disabling VPN if active
+
+**Upload Failures:**
+- Check available disk space
+- Verify file size limits
+- Ensure uploads directory exists
+- Check file permissions
+
+## 🤝 **Contributing**
+
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
+3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
+4. **Push** to the branch (`git push origin feature/amazing-feature`)
+5. **Open** a Pull Request
+
+## 📄 **License**
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 **Acknowledgments**
+
+- **Express.js** team for the robust web framework
+- **Multer** developers for file upload handling
+- **QRCode** library for seamless QR generation
+- **Open source community** for inspiration and support
+
+## 📞 **Support**
+
+- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/JiruGUtema/Sharing-File-Without-Cable-PC-Mobile/issues)
+- 💡 **Feature Requests**: [GitHub Discussions](https://github.com/JiruGUtema/Sharing-File-Without-Cable-PC-Mobile/discussions)
+- 📧 **Contact**: [jirudagutema@gmail.com](mailto:jirudagutema@gmail.com)
+
+---
+
+<div align="center">
+
+**Made with ❤️ for seamless file sharing**
+
+[⭐ Star this repo](https://github.com/JiruGUtema/Sharing-File-Without-Cable-PC-Mobile) • [🐛 Report Bug](https://github.com/JiruGUtema/Sharing-File-Without-Cable-PC-Mobile/issues) • [✨ Request Feature](https://github.com/JiruGUtema/Sharing-File-Without-Cable-PC-Mobile/issues)
+
+</div>

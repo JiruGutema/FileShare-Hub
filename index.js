@@ -137,11 +137,11 @@ app.get("/files", (_, res) => {
                   </div>
                 </div>
                 <div class="file-actions" style="flex-shrink: 0;">
-                  <a href="/uploads/${file.name}" class="btn btn-secondary" target="_blank">👁️ View</a>
-                  <a href="/uploads/${file.name}" download class="btn btn-success">⬇️ Download</a>
+                  <a href="/uploads/${file.name}" class="btn btn-secondary" target="_blank">View</a>
+                  <a href="/uploads/${file.name}" download class="btn btn-success">Download</a>
                   <form action="/delete" method="post" style="display:inline;">
                     <input type="hidden" name="filename" value="${file.name}">
-                    <button type="submit" class="btn btn-danger" onclick="return confirm('Delete this file?')">🗑️ Delete</button>
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Delete this file?')">Delete</button>
                   </form>
                 </div>
               </div>`
