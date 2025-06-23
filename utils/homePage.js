@@ -66,9 +66,15 @@ function homePage(styles, script, networkIP, PORT) {
         // Load QR code on page load
         async function loadQRCode() {
           try {
-            const response = await fetch('/qr');
-            const data = await response.json();
-            document.getElementById('qrCode').innerHTML = '<img src="' + data.qrCode + '" alt="QR Code" style="max-width: 200px;">';
+            const response = await fetch('/qr', {
+              credentials: 'include'
+            });
+            if (response.ok) {
+              const data = await response.json();
+              document.getElementById('qrCode').innerHTML = '<img src="' + data.qrCode + '" alt="QR Code" style="max-width: 200px;">';
+            } else {
+              document.getElementById('qrCode').textContent = 'Authentication required';
+            }
           } catch (error) {
             document.getElementById('qrCode').textContent = 'Failed to load QR code';
           }
@@ -77,8 +83,12 @@ function homePage(styles, script, networkIP, PORT) {
         // Generate new QR code
         async function generateNewQR() {
           document.getElementById('qrCode').textContent = 'Generating new QR code...';
-          await loadQRCode();
-          showNotification('New QR code generated!', 'success');
+          try {
+            await loadQRCode();
+            showNotification('New QR code generated!', 'success');
+          } catch (error) {
+            showNotification('Failed to generate QR code', 'error');
+          }
         }
         
         function copyToClipboard(text) {

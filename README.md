@@ -2,7 +2,7 @@
 
 **A modern, feature-rich file sharing application for seamless file transfer between devices on the same network.**
 
-![FileShare Hub](https://img.shields.io/badge/Node.js-Express-green) ![License](https://img.shields.io/badge/License-MIT-blue) ![Version](https://img.shields.io/badge/Version-2.0-orange)
+![FileShare Hub](https://img.shields.io/badge/Node.js-Express-green) ![License](https://img.shields.io/badge/License-MIT-blue) ![Version](https://img.shields.io/badge/Version-3.0-orange) ![Security](https://img.shields.io/badge/Security-5--digit--auth-red)
 
 ## ✨ Features
 
@@ -39,6 +39,14 @@
 - **One-click refresh** and navigation
 - **Instant URL copying** to clipboard
 - **Smart notifications** for user feedback
+
+### 🔐 **Security & Authentication**
+- **5-digit access code** generated on server startup
+- **Session-based authentication** with HTTP cookies
+- **Persistent login** until server restart
+- **Protected file access** with authentication middleware
+- **Graceful session cleanup** on server shutdown
+- **Secure file serving** with authentication checks
 
 ## 🛠️ **Technology Stack**
 
@@ -86,9 +94,17 @@ npm run dev
 - **Network Access**: `http://YOUR_IP:1234`
 
 The server will display a beautiful ASCII art banner with:
+- 🔐 **5-digit access code** for secure login
 - 📱 QR code for mobile access
 - 🌐 Network URLs for easy sharing
 - 💡 Helpful tips and instructions
+
+### 4. **Login Process**
+
+1. **Visit the application** → Redirected to login page
+2. **Enter 5-digit code** → Displayed in server terminal
+3. **Access granted** → Session persists until server restart
+4. **Enjoy secure file sharing** → All features unlocked
 
 ## 📱 **Mobile Access Setup**
 
@@ -134,14 +150,16 @@ FileShare-Hub/
 
 ## 🔌 **API Endpoints**
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/` | Homepage with upload interface |
-| `POST` | `/upload` | Handle file uploads (max 10 files) |
-| `GET` | `/files` | File manager with statistics |
-| `GET` | `/qr` | Generate QR code for network access |
-| `GET` | `/uploads/:filename` | Serve uploaded files |
-| `POST` | `/delete` | Delete specific files |
+| Method | Endpoint | Description | Auth Required |
+|--------|----------|-------------|---------------|
+| `GET` | `/login` | Login page with 5-digit code input | ❌ |
+| `POST` | `/auth` | Authentication endpoint | ❌ |
+| `GET` | `/` | Homepage with upload interface | ✅ |
+| `POST` | `/upload` | Handle file uploads (max 10 files) | ✅ |
+| `GET` | `/files` | File manager with statistics | ✅ |
+| `GET` | `/qr` | Generate QR code for network access | ✅ |
+| `GET` | `/uploads/:filename` | Serve uploaded files | ✅ |
+| `POST` | `/delete` | Delete specific files | ✅ |
 
 ## ⚙️ **Configuration**
 
@@ -161,11 +179,26 @@ MAX_FILE_SIZE=50MB       # Maximum file size
 
 ## 🔒 **Security Features**
 
+### **Authentication System**
+- **5-digit access code** generated randomly on startup
+- **Session-based authentication** with secure HTTP cookies
+- **Persistent login** across browser sessions
+- **Automatic session cleanup** on server shutdown
+- **Protected routes** requiring authentication
+
+### **File Security**
+- **Authenticated file access** - all files require login
 - **File type validation** and sanitization
 - **Upload size limits** to prevent abuse
 - **Timestamp-based naming** to avoid conflicts
 - **Local network restriction** (no external access)
 - **Input validation** and error handling
+
+### **Session Management**
+- **Cookie-based sessions** with 24-hour expiration
+- **Graceful shutdown** destroys all active sessions
+- **Memory-based storage** - no persistent session data
+- **Cross-page authentication** - login once, access everywhere
 
 ## 📊 **Performance**
 
@@ -174,6 +207,8 @@ MAX_FILE_SIZE=50MB       # Maximum file size
 - **Efficient rendering**: Minimal DOM manipulation
 - **Memory friendly**: Streaming file operations
 - **Mobile optimized**: Touch-friendly interactions
+- **Secure sessions**: Cookie-based authentication
+- **Quick startup**: Instant 5-digit code generation
 
 ## 🐛 **Troubleshooting**
 
@@ -199,6 +234,17 @@ const PORT = 3000; // Use different port
 - Verify file size limits
 - Ensure uploads directory exists
 - Check file permissions
+
+**Authentication Issues:**
+- Check the 5-digit code in server terminal
+- Clear browser cookies if login fails
+- Restart server to generate new access code
+- Ensure JavaScript is enabled for session handling
+
+**File Access Denied:**
+- Login required for all file operations
+- Check if session has expired
+- Re-authenticate if redirected to login page
 
 ## 🤝 **Contributing**
 

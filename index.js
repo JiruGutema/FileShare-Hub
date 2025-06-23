@@ -13,6 +13,7 @@ import script from "./utils/script.js"; // Import script
 import homePage from "./utils/homePage.js"; // Import home page template
 import getFiles from "./utils/getFiles.js";
 import uploadFiles from "./utils/uploadFiles.js";
+import loginPage from "./utils/login.js";
 
 const platform = os.platform();
 
@@ -22,9 +23,27 @@ const __dirname = dirname(__filename);
 const app = express();
 const PORT = 1234;
 
+// Generate random 5-digit access code
+const ACCESS_CODE = Math.floor(10000 + Math.random() * 90000).toString();
+const authenticatedSessions = new Set();
+
 // Create uploads directory if it doesn't exist
 if (!existsSync('uploads')) {
   mkdirSync('uploads');
+}
+
+// Middleware to parse JSON and URL-encoded data
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Simple session middleware with cookie support
+function requireAuth(req, res, next) {
+  const sessionId = req.headers['x-session-id'] || req.query.session || req.headers.cookie?.split('session=')[1]?.split(';')[0];
+  if (authenticatedSessions.has(sessionId)) {
+    next();
+  } else {
+    res.redirect('/login');
+  }
 }
 
 // Get network IP address
@@ -54,11 +73,18 @@ const storage = diskStorage({
 });
 const upload = multer({ storage });
 
-// Serve static files from the uploads directory
-app.use("/uploads", serveStatic("uploads"));
+// Serve static files from the uploads directory with authentication
+app.use("/uploads", (req, res, next) => {
+  const sessionId = req.headers.cookie?.split('session=')[1]?.split(';')[0] || req.query.session;
+  if (authenticatedSessions.has(sessionId)) {
+    next();
+  } else {
+    res.status(401).send('Authentication required');
+  }
+}, serveStatic("uploads"));
 
 // Endpoint to upload files (enhanced with multiple file support)
-app.post("/upload", upload.array("file", 10), (req, res) => {
+app.post("/upload", requireAuth, upload.array("file", 10), (req, res) => {
   if (!req.files || req.files.length === 0) {
     return res.status(400).send("No files uploaded.");
   }
@@ -75,7 +101,7 @@ app.post("/upload", upload.array("file", 10), (req, res) => {
 });
 
 // QR code generation endpoint
-app.get("/qr", async (_, res) => {
+app.get("/qr", requireAuth, async (_, res) => {
   try {
     const networkUrl = `http://${networkIP}:${PORT}`;
     const qrCodeDataURL = await QRCode.toDataURL(networkUrl, {
@@ -93,13 +119,32 @@ app.get("/qr", async (_, res) => {
 });
 
 
-// Home route with quick access features
-app.get("/", (_, res) => {
-  res.send(homePage(styles, script, networkIP, PORT));
+// Login page
+app.get("/login", (_, res) => {
+  res.send(loginPage());
+});
+
+// Authentication endpoint
+app.post("/auth", (req, res) => {
+  const { code } = req.body;
+  if (code === ACCESS_CODE) {
+    const sessionId = Date.now().toString() + Math.random().toString(36);
+    authenticatedSessions.add(sessionId);
+    res.cookie('session', sessionId, { httpOnly: false, maxAge: 24 * 60 * 60 * 1000 }); // 24 hours
+    res.redirect('/');
+  } else {
+    res.redirect('/login?error=1');
+  }
+});
+
+// Home route with authentication
+app.get("/", requireAuth, (req, res) => {
+  const sessionId = req.headers.cookie?.split('session=')[1]?.split(';')[0];
+  res.send(homePage(styles, script, networkIP, PORT, sessionId));
 });
 
 // Endpoint to list all uploaded files
-app.get("/files", (_, res) => {
+app.get("/files", requireAuth, (_, res) => {
   const directoryPath = join(__dirname, "uploads");
   readdir(directoryPath, (err, files) => {
     if (err) {
@@ -217,7 +262,7 @@ function formatFileSize(bytes) {
 
 
 // Endpoint to delete a file
-app.post("/delete", express.urlencoded({ extended: true }), (req, res) => {
+app.post("/delete", requireAuth, (req, res) => {
   const filePath = join(__dirname, "uploads", req.body.filename);
   unlink(filePath, (err) => {
     if (err) {
@@ -225,6 +270,21 @@ app.post("/delete", express.urlencoded({ extended: true }), (req, res) => {
     }
     res.redirect("/files");
   });
+});
+
+// Graceful shutdown handling
+process.on('SIGINT', () => {
+  console.log('\n\n📴 Server shutting down...');
+  console.log('🔒 All sessions destroyed');
+  authenticatedSessions.clear();
+  process.exit(0);
+});
+
+process.on('SIGTERM', () => {
+  console.log('\n\n📴 Server shutting down...');
+  console.log('🔒 All sessions destroyed');
+  authenticatedSessions.clear();
+  process.exit(0);
 });
 
 app.listen(PORT, () => {
@@ -237,10 +297,11 @@ app.listen(PORT, () => {
   console.log('║                                                                          ║');
   console.log('║   🚀 FileShare server is running!                                        ║');
   console.log('║                                                                          ║');
+  console.log(`║   🔐 Access Code:   ${ACCESS_CODE.padEnd(42)} ║`);
   console.log(`║   Local:            ${localUrl.padEnd(42)} ║`);
   console.log(`║   On Your Network:  ${networkUrl.padEnd(42)} ║`);
   console.log('║                                                                          ║');
-  console.log('║   Upload files by visiting either of the above addresses in your browser  ║');
+  console.log('║   Enter the 5-digit code when prompted to access the file sharing app    ║');
   console.log('║                                                                          ║');
   console.log('╚══════════════════════════════════════════════════════════════════════════╝');
   console.log('\n');
@@ -261,8 +322,10 @@ app.listen(PORT, () => {
     console.log('• Multiple file upload supported');
     console.log('• Dark mode available');
     console.log('• Mobile-friendly interface');
+    console.log('• Login persists until server restart');
     console.log('\n');
     console.log('Press Ctrl+C to stop the server');
     console.log('\n');
   });
-})
+});                                                 
+  
