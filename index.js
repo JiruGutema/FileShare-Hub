@@ -292,6 +292,13 @@ app.listen(PORT, () => {
   const networkUrl = `http://${networkIP}:${PORT}`;
   
   console.clear();
+   // Generate QR code for the network URL
+  qrcode.generate(networkUrl, { small: true }, (qrcode) => {
+    console.log(qrcode);
+    console.log('\n');
+    console.log('Press Ctrl+C to stop the server');
+    console.log('\n');
+  });
   console.log('\n');
   console.log('╔══════════════════════════════════════════════════════════════════════════╗');
   console.log('║                                                                          ║');
@@ -307,25 +314,11 @@ app.listen(PORT, () => {
   console.log('\n');
   console.log('📱 To share files with mobile devices:');
   console.log('1. Connect both devices to the same network');
-  console.log(`2. Scan the QR code or visit ${networkUrl} on your mobile device`);
-  console.log('3. Upload and share files instantly!');
-  console.log('\n');
-  console.log('📱 QR Code for Mobile Access:');
-  console.log('\n');
+  console.log(`2. Scan the QR code above or visit ${networkUrl} on your mobile device`);
+  console.log("3. Insert the above Access code to the password section")
+  console.log('4. Upload and share files instantly!');
+
   
-  // Generate QR code for the network URL
-  qrcode.generate(networkUrl, { small: true }, (qrcode) => {
-    console.log(qrcode);
-    console.log('\n');
-    console.log('💡 Tips:');
-    console.log('• Drag & drop files for quick upload');
-    console.log('• Multiple file upload supported');
-    console.log('• Dark mode available');
-    console.log('• Mobile-friendly interface');
-    console.log('• Login persists until server restart');
-    console.log('\n');
-    console.log('Press Ctrl+C to stop the server');
-    console.log('\n');
-  });
+ 
 });                                                 
   
