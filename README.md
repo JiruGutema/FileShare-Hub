@@ -1,5 +1,11 @@
 # 🚀 FileShare Hub
 
+> **Have you ever struggled to transfer files between your PC and mobile without cables, cloud uploads, or complicated setups?**  
+> **Tired of emailing yourself files or dealing with slow Bluetooth transfers?**
+
+**FileShare Hub** is designed to solve exactly that!  
+With just a browser and a shared Wi-Fi network (local - wifi doesn't have to work just local network), you can instantly upload, download, and manage files between any device—no cables, no accounts, no hassle.
+
 **A modern, feature-rich file sharing application for seamless file transfer between devices on the same network.**
 
 ![FileShare Hub](https://img.shields.io/badge/Node.js-Express-green) ![License](https://img.shields.io/badge/License-MIT-blue) ![Version](https://img.shields.io/badge/Version-3.0-orange) ![Security](https://img.shields.io/badge/Security-5--digit--auth-red)
