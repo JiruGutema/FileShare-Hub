@@ -49,10 +49,10 @@ function homePage(styles, script, networkIP, PORT) {
             <h3>File Manager</h3>
             <p>View & manage files</p>
           </div>
-          <div class="quick-card" onclick="window.location.reload()">
-            <span class="quick-card-icon">🔄</span>
-            <h3>Refresh</h3>
-            <p>Update file list</p>
+          <div class="quick-card" onclick="window.location.href='/text'">
+            <span class="quick-card-icon">📝</span>
+            <h3>Text Sharing</h3>
+            <p>Share code & text</p>
           </div>
           <div class="quick-card" onclick="navigator.share ? navigator.share({title: 'FileShare Hub', url: window.location.href}) : copyToClipboard(window.location.href)">
             <span class="quick-card-icon">📱</span>

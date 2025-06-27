@@ -5,7 +5,7 @@ const styles = `
     }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background:rgb(255, 255, 255);
       margin: 0;
       padding: 20px;
       min-height: 100vh;
@@ -19,16 +19,15 @@ const styles = `
     .container {
       max-width: 800px;
       margin: 0 auto;
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 20px;
+      background:rgb(233, 233, 233);
+
+      border-radius: 10px;
       padding: 30px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
       backdrop-filter: blur(10px);
       transition: all 0.3s ease;
     }
     .container.dark {
       background: rgba(44, 62, 80, 0.95);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     }
     h1, h2 {
       text-align: center;
