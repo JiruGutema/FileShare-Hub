@@ -15,13 +15,13 @@ function uploadFiles(styles, script, uploadedFiles) {
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>✅ Upload Success</title>
+      <title>Upload Success</title>
       ${styles}
     </head>
     <body>
       <button id="toggle" class="toggle-btn">🌙 Dark</button>
       <div class="container">
-        <h1>✅ Upload Successful!</h1>
+        <h1>Upload Successful!</h1>
         <div style="text-align: center; margin: 30px 0;">
           <div style="font-size: 64px; margin-bottom: 20px;">🎉</div>
           <p style="font-size: 18px; opacity: 0.8;">${uploadedFiles.length} file(s) uploaded successfully</p>

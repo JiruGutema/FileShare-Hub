@@ -42,7 +42,7 @@ const loginPage = () => {
         <h1>Access Code</h1>
         <p>Enter the 5-digit access code to continue</p>
         <form action="/auth" method="post">
-          <input type="text" name="code" class="code-input" placeholder="00000" maxlength="5" pattern="[0-9]{5}" required>
+          <input type="text" name="code" class="code-input" placeholder="00000" maxlength="5"> 
           <br>
           <button type="submit" class="btn">Access FileShare</button>
         </form>

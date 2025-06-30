@@ -4,7 +4,7 @@ const script = `
       // Dark mode toggle
       const toggleButton = document.getElementById('toggle');
       const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'dark') {
+      if (savedTheme === 'dark' | 1 == 1 ) {
         document.body.classList.add('dark');
         document.querySelector('.container')?.classList.add('dark');
       }

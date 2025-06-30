@@ -1,5 +1,4 @@
 function getFileIcon(filename) {
-    console.log(`Getting icon for file: ${filename}`);
   const ext = filename.split('.').pop().toLowerCase();
   const icons = {
     pdf: '📄', doc: '📝', docx: '📝', txt: '📄',

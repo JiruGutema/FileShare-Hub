@@ -5,7 +5,7 @@ function homePage(styles, script, networkIP, PORT) {
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>🚀 FileShare Hub</title>
+      <title>FileShare Hub</title>
       ${styles}
     </head>
     <body>
@@ -24,7 +24,7 @@ function homePage(styles, script, networkIP, PORT) {
           <div class="progress-bar">
             <div class="progress-fill"></div>
           </div>
-          <button type="submit" class="btn">🚀 Upload Files</button>
+          <button type="submit" class="btn">Upload Files</button>
         </form>
         
         <div class="qr-section">
@@ -33,8 +33,7 @@ function homePage(styles, script, networkIP, PORT) {
           <div id="qrCode" class="qr-code">Loading QR Code...</div>
           <div class="network-url" id="networkUrl">Network: http://${networkIP}:${PORT}</div>
           <div class="url-actions">
-            <button class="btn btn-secondary" onclick="copyToClipboard(document.getElementById('networkUrl').textContent.split(': ')[1])">📋 Copy URL</button>
-            <button class="btn btn-secondary" onclick="generateNewQR()">🔄 New QR Code</button>
+            <button class="btn btn-secondary" onclick="copyToClipboard(document.getElementById('networkUrl').textContent.split(': ')[1])">Copy URL</button>
           </div>
         </div>
         
@@ -54,11 +53,7 @@ function homePage(styles, script, networkIP, PORT) {
             <h3>Text Sharing</h3>
             <p>Share code & text</p>
           </div>
-          <div class="quick-card" onclick="navigator.share ? navigator.share({title: 'FileShare Hub', url: window.location.href}) : copyToClipboard(window.location.href)">
-            <span class="quick-card-icon">📱</span>
-            <h3>Share Link</h3>
-            <p>Share with devices</p>
-          </div>
+          
         </div>
       </div>
       ${script}

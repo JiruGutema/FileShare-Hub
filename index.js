@@ -14,6 +14,7 @@ import homePage from "./utils/homePage.js"; // Import home page template
 import getFiles from "./utils/getFiles.js";
 import uploadFiles from "./utils/uploadFiles.js";
 import loginPage from "./utils/login.js";
+import getFileIcon from "./utils/getFileIcon.js";
 
 const platform = os.platform();
 
@@ -77,7 +78,7 @@ const storage = diskStorage({
   },
   filename: (_, file, cb) => {
     // Add timestamp before the original name to avoid collisions
-    cb(null, Date.now() + '-' + file.originalname);
+    cb(null,file.originalname);
   },
 });
 const upload = multer({ storage });
@@ -94,7 +95,10 @@ app.use("/uploads", (req, res, next) => {
 
 // Endpoint to upload files (enhanced with multiple file support)
 app.post("/upload", requireAuth, upload.array("file", 10), (req, res) => {
+
+  
   if (!req.files || req.files.length === 0) {
+    console.log('No files uploaded');
     return res.status(400).send("No files uploaded.");
   }
   
@@ -104,9 +108,8 @@ app.post("/upload", requireAuth, upload.array("file", 10), (req, res) => {
     size: file.size
   }));
   
-  res.send(
-   uploadFiles(styles, script, uploadedFiles)
-  );
+  console.log('Uploaded files:', uploadedFiles);
+  res.send(uploadFiles(styles, script, uploadedFiles));
 });
 
 // QR code generation endpoint
@@ -136,8 +139,8 @@ app.get("/login", (_, res) => {
 // Authentication endpoint
 app.post("/auth", (req, res) => {
   const { code } = req.body;
-  //! TODO: Remove it
-  if (code === ACCESS_CODE | 1==1) { //! TODO : bypass it
+
+  if (code === ACCESS_CODE) { 
     const sessionId = Date.now().toString() + Math.random().toString(36);
     authenticatedSessions.add(sessionId);
     res.cookie('session', sessionId, { httpOnly: false, maxAge: 24 * 60 * 60 * 1000 }); // 24 hours
@@ -185,7 +188,7 @@ app.get("/files", requireAuth, (_, res) => {
             .map(file => `
               <div class="file-item">
                 <div class="file-info">
-                  <div class="file-icon">📁</div>
+                  <div class="file-icon">${getFileIcon(file.name)}</div>
                   <div class="file-details">
                     <h4 style="word-break: break-all; overflow-wrap: break-word; max-width: 300px;">${file.name}</h4>
                     <p class="file-size">${formatFileSize(file.size)} • ${new Date(file.date).toLocaleDateString()}</p>
@@ -236,8 +239,7 @@ app.get("/files", requireAuth, (_, res) => {
                 </div>
                 
                 <div style="text-align: center; margin-top: 30px;">
-                  <a href="/" class="btn">📤 Upload More</a>
-                  <button onclick="location.reload()" class="btn btn-secondary">🔄 Refresh</button>
+                  <a href="/" class="btn">Upload More</a>
                 </div>
               </div>
               ${script}
@@ -279,15 +281,15 @@ app.get("/text", requireAuth, (_, res) => {
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>📝 Text Sharing</title>
+      <title>Text Sharing</title>
       ${styles}
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
       <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     </head>
     <body>
-      <button id="toggle" class="toggle-btn">🌙 Dark</button>
+      <button id="toggle" style="color: black; background: rgba(255, 255, 255, 0.3) !important; " class="toggle-btn">🌙 Dark</button>
       <div class="container">
-        <h1>📝 Text Sharing</h1>
+        <h1>Text Sharing</h1>
         
         <form action="/text" method="post" style="margin-bottom: 30px;">
           <div style="margin-bottom: 15px;">
@@ -308,19 +310,18 @@ app.get("/text", requireAuth, (_, res) => {
           <textarea id="textContent" name="content" placeholder="Paste your text or code here..." style="width: 100%; height: 300px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; font-family: monospace; font-size: 14px;" required></textarea>
           <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
             <button type="submit" class="btn">Share Data</button>
-            <button type="button" class="btn btn-secondary" onclick="pasteText()">Paste</button>
           </div>
         </form>
         
         ${sharedText.content ? `
           <div style="margin-bottom: 20px;">
-            <h3>Shared Content (${sharedText.language}):</h3>
+          <h3>Shared Content (${sharedText.language}):</h3>
+          <div style="margin: 15px 0; display: flex; gap: 10px; flex-wrap: wrap;">
+            <button class="btn btn-secondary" onclick="copySharedText()">Copy</button>
+            <button class="btn btn-secondary" onclick="saveSharedAsFile()">Save As</button>
+          </div>
             <div style="background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; padding: 20px; margin: 15px 0;">
               <pre><code id="sharedCode" class="language-${sharedText.language}">${sharedText.content.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>
-            </div>
-            <div style="margin: 15px 0; display: flex; gap: 10px; flex-wrap: wrap;">
-              <button class="btn btn-secondary" onclick="copySharedText()">Copy</button>
-              <button class="btn btn-secondary" onclick="saveSharedAsFile()">Save As</button>
             </div>
             <small style="color: #666;">Saved: ${new Date(sharedText.timestamp).toLocaleString()}</small>
           </div>
@@ -455,8 +456,8 @@ app.post("/delete", requireAuth, (req, res) => {
 
 // Graceful shutdown handling
 process.on('SIGINT', () => {
-  console.log('\n\n📴 Server shutting down...');
-  console.log('🔒 All sessions destroyed');
+  console.log('\n\nServer shutting down...');
+  console.log('All sessions destroyed');
   authenticatedSessions.clear();
   process.exit(0);
 });
@@ -476,9 +477,9 @@ app.listen(PORT, () => {
   console.log('\n');
   console.log('╔══════════════════════════════════════════════════════════════════════════╗');
   console.log('║                                                                          ║');
-  console.log('║   🚀 FileShare server is running!                                        ║');
+  console.log('║   FileShare server is running!                                        ║');
   console.log('║                                                                          ║');
-  console.log(`║   🔐 Access Code:   ${ACCESS_CODE.padEnd(42)} ║`);
+  console.log(`║   Access Code:   ${ACCESS_CODE.padEnd(42)} ║`);
   console.log(`║   Local:            ${localUrl.padEnd(42)} ║`);
   console.log(`║   On Your Network:  ${networkUrl.padEnd(42)} ║`);
   console.log('║                                                                          ║');

@@ -247,7 +247,7 @@ const styles = `
       position: fixed;
       top: 20px;
       right: 20px;
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.2) !important;
       border: 2px solid rgba(255, 255, 255, 0.3);
       color: white;
       padding: 10px 15px;
