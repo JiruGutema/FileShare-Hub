@@ -19,7 +19,7 @@ function uploadFiles(styles, script, uploadedFiles) {
       ${styles}
     </head>
     <body>
-      <button id="toggle" class="toggle-btn">🌙 Dark</button>
+       <!-- <button id="toggle" class="toggle-btn">🌙 Dark</button> -->
       <div class="container">
         <h1>Upload Successful!</h1>
         <div style="text-align: center; margin: 30px 0;">

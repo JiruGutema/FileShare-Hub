@@ -9,7 +9,7 @@ function homePage(styles, script, networkIP, PORT) {
       ${styles}
     </head>
     <body>
-      <button id="toggle" class="toggle-btn">🌙 Dark</button>
+      <!-- <button id="toggle" class="toggle-btn">🌙 Dark</button> -->
       <div class="container">
         <h1>🚀 FileShare Hub</h1>
         <p style="text-align: center; margin-bottom: 20px; opacity: 0.8;">Share files instantly across devices</p>

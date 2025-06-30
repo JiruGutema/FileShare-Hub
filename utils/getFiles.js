@@ -9,7 +9,7 @@ function getFiles(script, styles){
               ${styles}
             </head>
             <body>
-              <button id="toggle" class="toggle-btn">🌙 Dark</button>
+               <!-- <button id="toggle" class="toggle-btn">🌙 Dark</button> -->
               <div class="container">
                 <h1>File Manager</h1>
                 <div style="text-align: center; padding: 60px 20px;">
