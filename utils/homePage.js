@@ -38,11 +38,6 @@ function homePage(styles, script, networkIP, PORT) {
         </div>
         
         <div class="quick-access">
-          <div class="quick-card" onclick="document.getElementById('fileInput').click()">
-            <span class="quick-card-icon">📤</span>
-            <h3>Quick Upload</h3>
-            <p>Upload files instantly</p>
-          </div>
           <div class="quick-card" onclick="window.location.href='/files'">
             <span class="quick-card-icon">📂</span>
             <h3>File Manager</h3>
