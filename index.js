@@ -196,16 +196,16 @@ app.get("/files", requireAuth, (_, res) => {
                 <div class="file-info">
                   <div class="file-icon">${getFileIcon(file.name)}</div>
                   <div class="file-details">
-                    <h4 style="word-break: break-all; overflow-wrap: break-word; max-width: 300px;">${file.name}</h4>
+                    <h4>${file.name}</h4>
                     <p class="file-size">${formatFileSize(file.size)} • ${new Date(file.date).toLocaleDateString()}</p>
                   </div>
                 </div>
-                <div class="file-actions" style="flex-shrink: 0;">
-                  <a href="/uploads/${file.name}" class="btn file-btn btn-secondary" target="_blank">View</a>
-                  <a href="/uploads/${file.name}" download class="btn file-btn btn-success">Download</a>
-                  <form action="/delete" method="post" style="display:inline;">
+                <div class="file-actions">
+                  <a href="/uploads/${file.name}" class="btn file-btn btn-secondary" target="_blank">👁️ View</a>
+                  <a href="/uploads/${file.name}" download class="btn file-btn btn-success">⬇️ Download</a>
+                  <form action="/delete" method="post" style="display:inline; flex: 1;">
                     <input type="hidden" name="filename" value="${file.name}">
-                    <button type="submit" class="btn file-btn btn-danger" onclick="return confirm('Delete this file?')">Delete</button>
+                    <button type="submit" class="btn file-btn btn-danger" onclick="return confirm('Delete this file?')" style="width: 100%;">🗑️ Delete</button>
                   </form>
                 </div>
               </div>`)
@@ -242,11 +242,14 @@ app.get("/files", requireAuth, (_, res) => {
                 
                 <div class="file-list">
                   ${fileItems}
-                </div>
-                
-                <div style="text-align: center; margin-top: 30px;">
-                  <a href="/share" class="btn">Upload More</a>
-                </div>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; margin: auto; width: 350px ">
+                    <div style="text-align: center; margin-top: 30px;">
+                      <a href="/share" class="btn">Upload More</a>
+                    </div>
+                    <div style="text-align: center; margin-top: 30px;">
+                      <a href="/" class="btn">Home</a>
+                </div></div>
               </div>
               ${script}
               <script>

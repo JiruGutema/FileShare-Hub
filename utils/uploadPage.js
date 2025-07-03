@@ -27,7 +27,7 @@ function uploadPage(styles, script, networkIP, PORT) {
         </form>
         
         <div style="text-align: center; margin-top: 30px;">
-          <a href="/" class="btn btn-secondary">← Back to Home</a>
+          <a href="/" class="btn btn-secondary">Back to Home</a>
         </div>
       </div>
       ${script}

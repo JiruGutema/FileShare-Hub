@@ -541,13 +541,13 @@ const styles = `
       background: var(--bg-card);
       border-radius: var(--radius-sm);
       display: flex;
-      align-items: center;
-      justify-content: space-between;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+      padding: var(--spacing-md);
       transition: all var(--transition-normal);
       box-shadow: var(--shadow-sm);
       border: 1px solid var(--border-color);
-      margin: 5px 10px !important;
-
+      margin-bottom: var(--spacing-sm);
     }
 
     .file-item:hover {
@@ -558,8 +558,8 @@ const styles = `
     .file-info {
       display: flex;
       align-items: center;
-      flex: 1;
-      min-width: 0; /* Allow text truncation */
+      width: 100%;
+      min-width: 0;
     }
 
     .file-icon {
@@ -578,10 +578,9 @@ const styles = `
     .file-details h4 {
       margin: 0 0 var(--spacing-xs) 0;
       color: var(--text-primary);
-      font-size: 1rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: 0.9rem;
+      word-break: break-word;
+      line-height: 1.3;
     }
 
     .file-size {
@@ -592,8 +591,9 @@ const styles = `
 
     .file-actions {
       display: flex;
-      gap: var(--spacing-sm);
-      flex-shrink: 0;
+      gap: var(--spacing-xs);
+      width: 100%;
+      justify-content: space-between;
     }
 
     /* Toggle Button */
@@ -688,10 +688,14 @@ const styles = `
 textarea {
   background: #909FA0 !important;
   }
-  .file-btn {
-    padding:5px !important;
-    border-radius: 5px !important;
-    background: inherit !important;
+    .file-btn {
+      padding: var(--spacing-xs) var(--spacing-sm) !important;
+      border-radius: var(--radius-sm) !important;
+      font-size: 0.8rem !important;
+      min-height: 36px !important;
+      flex: 1;
+      text-align: center;
+      white-space: nowrap;
     }
 
     /* QR Section */
@@ -741,11 +745,11 @@ textarea {
     /* Responsive Design */
     @media (max-width: 768px) {
       body {
-        padding: var(--spacing-md);
+        padding: var(--spacing-sm);
       }
 
       .container {
-        padding: var(--spacing-lg);
+        padding: var(--spacing-md);
         border-radius: var(--radius-md);
       }
 
@@ -754,16 +758,37 @@ textarea {
         margin: var(--spacing-md);
       }
 
-  
+      .file-item {
+        padding: var(--spacing-sm);
+      }
 
-      .file-actions {
-        width: 100%;
-        justify-content: center;
+      .file-icon {
+        font-size: 1.2rem;
+        margin-right: var(--spacing-sm);
+        width: 30px;
+      }
+
+      .file-details h4 {
+        font-size: 0.85rem;
+      }
+
+      .file-size {
+        font-size: 0.7rem;
+      }
+
+      .file-btn {
+        font-size: 0.75rem !important;
+        padding: var(--spacing-xs) !important;
+        min-height: 32px !important;
       }
 
       .stats {
-        flex-direction: column;
-        gap: var(--spacing-md);
+        padding: var(--spacing-md);
+        gap: var(--spacing-sm);
+      }
+
+      .stat-number {
+        font-size: 1.2rem;
       }
 
       .toggle-btn {
@@ -791,7 +816,7 @@ textarea {
 
     @media (max-width: 480px) {
       .container {
-        padding: var(--spacing-md);
+        padding: var(--spacing-sm);
       }
 
       .login-container {
@@ -799,7 +824,7 @@ textarea {
       }
 
       h1 {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
       }
 
       .btn {
@@ -807,9 +832,44 @@ textarea {
         margin: var(--spacing-xs) 0;
       }
 
-      .file-actions .btn {
-        width: auto;
+      .file-item {
+        padding: var(--spacing-xs);
+        gap: var(--spacing-xs);
+      }
+
+      .file-icon {
+        font-size: 1rem;
+        width: 24px;
+        margin-right: var(--spacing-xs);
+      }
+
+      .file-details h4 {
+        font-size: 0.8rem;
+        line-height: 1.2;
+      }
+
+      .file-size {
+        font-size: 0.65rem;
+      }
+
+      .file-btn {
+        font-size: 0.7rem !important;
+        padding: 4px 6px !important;
+        min-height: 28px !important;
+      }
+
+      .stats {
+        padding: var(--spacing-sm);
+        flex-direction: row;
+        text-align: center;
+      }
+
+      .stat-item {
         flex: 1;
+      }
+
+      .stat-number {
+        font-size: 1rem;
       }
     }
 

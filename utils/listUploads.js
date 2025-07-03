@@ -42,7 +42,10 @@ export function listUploads(files, styles, script, fileItems, formatFileSize) {
                 </div>
                 
                 <div style="text-align: center; margin-top: 30px;">
-                  <a href="/" class="btn">Upload More</a>
+                  <a href="/share" class="btn">Upload More</a>
+                </div>
+                <div style="text-align: center; margin-top: 30px;">
+                  <a href="/" class="btn">Home</a>
                 </div>
               </div>
               ${script}

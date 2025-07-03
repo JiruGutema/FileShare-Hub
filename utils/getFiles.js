@@ -16,7 +16,8 @@ function getFiles(script, styles){
                   <div style="font-size: 64px; margin-bottom: 20px;">📭</div>
                   <h3>No files uploaded yet</h3>
                   <p style="opacity: 0.7; margin-bottom: 30px;">No Files are uploaded on a Server! Start by Uploading Files</p>
-                  <a href="/" class="btn">📤 Upload Files</a>
+                  <a href="/share" class="btn">Upload More</a>
+                  <a href="/" class="btn">Home</a>
                 </div>
               </div>
               ${script}
