@@ -14,30 +14,13 @@ function homePage(styles, script, networkIP, PORT) {
         <h1>🚀 FileShare Hub</h1>
         <p style="text-align: center; margin-bottom: 20px; opacity: 0.8;">Share files instantly across devices</p>
         
-        <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
-          <div class="upload-area">
-            <div class="upload-icon">☁️</div>
-            <div class="upload-text">Drop files here or click to browse</div>
-            <input type="file" id="fileInput" name="file" required multiple>
-            <label for="fileInput" class="file-input-label">Choose Files</label>
+
+           <div class="quick-access">
+          <div class="quick-card" onclick="window.location.href='/share'">
+            <span class="quick-card-icon">📤</span>
+            <h3>Share Files</h3>
+            <p>Upload & share files</p>
           </div>
-          <div class="progress-bar">
-            <div class="progress-fill"></div>
-          </div>
-          <button type="submit" class="btn">Upload Files</button>
-        </form>
-        
-        <div class="qr-section">
-          <h3>📱 Mobile Access</h3>
-          <p style="opacity: 0.8; margin-bottom: 20px;">Scan QR code or copy URL to access from mobile devices</p>
-          <div id="qrCode" class="qr-code">Loading QR Code...</div>
-          <div class="network-url" id="networkUrl">Network: http://${networkIP}:${PORT}</div>
-          <div class="url-actions">
-            <button class="btn btn-secondary" onclick="copyToClipboard(document.getElementById('networkUrl').textContent.split(': ')[1])">Copy URL</button>
-          </div>
-        </div>
-        
-        <div class="quick-access">
           <div class="quick-card" onclick="window.location.href='/files'">
             <span class="quick-card-icon">📂</span>
             <h3>File Manager</h3>
@@ -48,8 +31,18 @@ function homePage(styles, script, networkIP, PORT) {
             <h3>Text Sharing</h3>
             <p>Share code & text</p>
           </div>
-          
         </div>
+        <div class="qr-section">
+          <h3>📱 Mobile Access</h3>
+          <p style="opacity: 0.8; margin-bottom: 20px;">Scan QR code or copy URL to access from mobile devices</p>
+          <div id="qrCode" class="qr-code">Loading QR Code...</div>
+          <div class="network-url" id="networkUrl">Network: http://${networkIP}:${PORT}</div>
+          <div class="url-actions">
+            <button class="btn btn-secondary" onclick="copyToClipboard(document.getElementById('networkUrl').textContent.split(': ')[1])">Copy URL</button>
+          </div>
+        </div>
+        
+     
       </div>
       ${script}
       <script>

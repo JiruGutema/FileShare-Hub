@@ -13,6 +13,7 @@ import script from "./utils/script.js"; // Import script
 import homePage from "./utils/homePage.js"; // Import home page template
 import getFiles from "./utils/getFiles.js";
 import uploadFiles from "./utils/uploadFiles.js";
+import uploadPage from "./utils/uploadPage.js";
 import loginPage from "./utils/login.js";
 import shareText from "./utils/shareText.js"; // Import text sharing functionality
 import getFileIcon from "./utils/getFileIcon.js";
@@ -97,11 +98,9 @@ app.use("/uploads", (req, res, next) => {
 
 // Endpoint to upload files (enhanced with multiple file support)
 app.post("/upload", requireAuth, upload.array("file", 10), (req, res) => {
-
-  
   if (!req.files || req.files.length === 0) {
     console.log('No files uploaded');
-    return res.status(400).send("No files uploaded.");
+    return res.status(400).json({ error: "No files uploaded." });
   }
   
   const uploadedFiles = req.files.map(file => ({
@@ -111,7 +110,7 @@ app.post("/upload", requireAuth, upload.array("file", 10), (req, res) => {
   }));
   
   console.log('Uploaded files:', uploadedFiles);
-  res.send(uploadFiles(styles, script, uploadedFiles));
+  res.json({ success: true, count: uploadedFiles.length });
 });
 
 // QR code generation endpoint
@@ -156,6 +155,11 @@ app.post("/auth", (req, res) => {
 app.get("/", requireAuth, (req, res) => {
   const sessionId = req.headers.cookie?.split('session=')[1]?.split(';')[0];
   res.send(homePage(styles, script, networkIP, PORT, sessionId));
+});
+
+// Share files route
+app.get("/share", requireAuth, (req, res) => {
+  res.send(uploadPage(styles, script, networkIP, PORT));
 });
 
 // Endpoint to list all uploaded files
@@ -241,7 +245,7 @@ app.get("/files", requireAuth, (_, res) => {
                 </div>
                 
                 <div style="text-align: center; margin-top: 30px;">
-                  <a href="/" class="btn">Upload More</a>
+                  <a href="/share" class="btn">Upload More</a>
                 </div>
               </div>
               ${script}
@@ -253,6 +257,8 @@ app.get("/files", requireAuth, (_, res) => {
                   const i = Math.floor(Math.log(bytes) / Math.log(k));
                   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
                 }
+                
+
               </script>
             </body>
             </html>
